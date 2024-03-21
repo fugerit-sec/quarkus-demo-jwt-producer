@@ -30,16 +30,15 @@ public class ProduceDemoRest {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/jwt/{claimKey}/{claimValue}")
-    public Response jwt( @PathParam("claimKey") String claimKey, @PathParam("claimValue") String claimValue  ) {
+    @Path("/jwt/{nickname}")
+    public Response jwt(  @PathParam("nickname") String nickname  ) {
         ProduceDemoResponse sr = new ProduceDemoResponse();
         Response res = null;
         try {
             String jwt = Jwt.issuer("https://demo.fugerit.org")
                     .upn("fugerit79")
                     .groups(new HashSet<>(Arrays.asList("User", "Demo")))
-                    .claim( claimKey, claimValue )
-                    .claim( Claims.nickname.name(), "Fugerit" )
+                    .claim( Claims.nickname.name(), nickname )
                     .sign();
             sr.setJwt( jwt );
             log.info( "jwt ok : {}", jwt );
