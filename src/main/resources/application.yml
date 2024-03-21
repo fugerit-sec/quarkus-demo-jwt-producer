@@ -5,3 +5,9 @@ quarkus:
 
 greeting:
   message: "hello"
+
+smallrye:
+  jwt:
+    sign:
+      key:
+        location: src/main/local/privateKey.pem
