@@ -15,7 +15,7 @@ mvn io.quarkus:quarkus-maven-plugin:3.8.3:create \
 ```
 ## Requirement
 
-- java 21+
+- java 21+ (grallvm 21+ for native compilation)
 - maven 3.9.6+
 
 ## Quickstart
@@ -23,17 +23,41 @@ mvn io.quarkus:quarkus-maven-plugin:3.8.3:create \
 1. Open first terminal
 
 ```bash
-clone https://github.com/fugerit-sec/quarkus-demo-jwt-consumer
+git clone https://github.com/fugerit-sec/quarkus-demo-jwt-consumer
 cd quarkus-demo-jwt-consumer
+```
+
+And run quarkus in dev mode
+
+```bash
 mvn quarkus:dev
+```
+
+Or build / run quarkus native (graalvm required)
+
+```bash
+mvn install -Dnative
+./target/quarkus-demo-jwt-consumer-*-runner
 ```
 
 2. open second terminal
 
 ```bash
-clone https://github.com/fugerit-sec/quarkus-demo-jwt-producer
+git clone https://github.com/fugerit-sec/quarkus-demo-jwt-producer
 cd quarkus-demo-jwt-producer
+```
+
+And run quarkus in dev mode
+
+```bash
 mvn quarkus:dev
+```
+
+Or build / run quarkus native (graalvm required)
+
+```bash
+mvn install -Dnative
+./target/quarkus-demo-jwt-producer-*-runner
 ```
 
 3. open third terminal
