@@ -10,15 +10,23 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.microprofile.jwt.Claim;
+import org.eclipse.microprofile.jwt.Claims;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.fugerit.java.emp.sm.service.ServiceMessage;
 import org.fugerit.java.emp.sm.service.ServiceResponse;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 @ApplicationScoped
 @Path("/produce")
 @Slf4j
 public class ProduceDemoRest {
+
+    @RestClient
+    ConsumerDemoClient consumerDemoClient;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -27,10 +35,18 @@ public class ProduceDemoRest {
         ProduceDemoResponse sr = new ProduceDemoResponse();
         Response res = null;
         try {
-            JwtClaimsBuilder builder1 = Jwt.claims();
-            builder1.claim( claimKey, claimValue ).issuer("https://demo.fugerit.org");
-            String jwt = builder1.sign();
+            String jwt = Jwt.issuer("https://demo.fugerit.org")
+                    .upn("fugerit79")
+                    .groups(new HashSet<>(Arrays.asList("User", "Demo")))
+                    .claim( claimKey, claimValue )
+                    .claim( Claims.nickname.name(), "Fugerit" )
+                    .sign();
             sr.setJwt( jwt );
+            log.info( "jwt ok : {}", jwt );
+            String authorization = "Bearer "+jwt;
+            String consumeDemo = this.consumerDemoClient.jwt( authorization );
+            sr.setConsumeDemo( consumeDemo );
+            log.info( "consumeDemo ok : {}", consumeDemo );
             res = Response.ok().entity( sr ).build();
         } catch (Exception e) {
             sr.setErrors( List.of( new ServiceMessage( "500", ServiceMessage.SEVERITY_ERROR, "Errore : "+e.getMessage() ) ) );
