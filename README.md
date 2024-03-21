@@ -20,7 +20,7 @@ mvn io.quarkus:quarkus-maven-plugin:3.8.3:create \
 
 ## Quickstart
 
-1. Open first terminal
+### 1. Open first terminal
 
 ```bash
 git clone https://github.com/fugerit-sec/quarkus-demo-jwt-consumer
@@ -40,7 +40,7 @@ mvn install -Dnative
 ./target/quarkus-demo-jwt-consumer-*-runner
 ```
 
-2. open second terminal
+### 2. open second terminal
 
 ```bash
 git clone https://github.com/fugerit-sec/quarkus-demo-jwt-producer
@@ -60,7 +60,7 @@ mvn install -Dnative
 ./target/quarkus-demo-jwt-producer-*-runner
 ```
 
-3. open third terminal
+### 3. open third terminal
 
 ```bash
 curl -X 'GET' \
